@@ -1,0 +1,59 @@
+### 1. Add Four Different Users in the Organization Account:
+
+#### Using AWS Management Console:
+1. Navigate to the IAM console.
+2. Go to "Users" and click "Add user."
+3. Enter the user details (e.g., User1, User2, User3, User4).
+4. Choose "Add user to group" if applicable, or assign policies directly.
+5. Click "Add user."
+
+### 2. Add One User Without Permission:
+
+#### Using AWS Management Console:
+1. Follow the steps above to create a user.
+2. Skip adding the user to any group or attaching any policy.
+
+### 3. Add User with Console & Programmatic Access:
+
+#### Using AWS Management Console:
+1. Follow the steps above to create a user.
+2. On the "Set permissions" page, choose "Attach existing policies directly."
+3. Attach policies for both "AWS Management Console access" and "Programmatic access."
+
+### 4. Set Password for IAM User Created Without Password:
+
+#### Using AWS Management Console:
+1. Navigate to the IAM console.
+2. Go to "Users" and select the user without a password.
+3. Click on the "Security credentials" tab.
+4. Click "Manage password."
+5. Choose "Assign a new password" and follow the instructions.
+
+### 5. Add User Without Any Permission (Permission Denied):
+
+#### Using AWS Management Console:
+1. Follow the steps above to create a user.
+2. Skip adding the user to any group or attaching any policy.
+
+### 6. S3 Read-Only Access:
+
+#### Using AWS Management Console:
+1. Navigate to the IAM console.
+2. Go to "Policies" and create a new policy with S3 read-only permissions.
+3. Attach the policy to the desired user.
+
+### 7. Jarvis Admin Access:
+
+#### Using AWS Management Console:
+1. If "Jarvis Admin Access" refers to a custom policy, create the policy first.
+2. Attach the policy to the user who requires Jarvis Admin Access.
+
+### 8. Add User with Programmatic Access:
+
+#### Using AWS CLI:
+```bash
+aws iam create-user --user-name ProgrammaticUser
+aws iam create-access-key --user-name ProgrammaticUser
+```
+
+nd authentication.

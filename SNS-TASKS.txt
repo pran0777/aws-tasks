@@ -1,0 +1,51 @@
+you can follow the steps outlined below. Please note that you'll need appropriate AWS IAM (Identity and Access Management) permissions to create and configure SNS topics and subscriptions.
+
+### 1. Configure SNS with S3 Static Website:
+
+#### Create SNS Topic:
+1. Go to the AWS SNS (Simple Notification Service) console.
+2. Click on "Create topic."
+3. Provide a name and display name for your topic.
+4. Click "Create topic."
+
+#### Subscribe to S3 Events:
+1. Open your S3 bucket console.
+2. Navigate to the "Properties" tab.
+3. Under "Events," click on "Create event."
+4. Choose the event type (e.g., All object create events).
+5. For the destination, select "Amazon SNS topic" and choose the topic you created earlier.
+
+### 2. Configure SNS with Email Server Level Notification and Load Balancer:
+
+#### Create SNS Topic:
+1. Follow the steps mentioned in the first section to create an SNS topic.
+
+#### Subscribe to Email Notifications:
+1. In the SNS topic console, click on your topic.
+2. Click on "Create Subscription."
+3. Choose "Email" as the protocol and provide the email address for notifications.
+4. Confirm the subscription by clicking the link sent to the provided email address.
+
+#### Integrate with Load Balancer:
+1. Open the AWS EC2 console and go to the Load Balancers section.
+2. Select your load balancer and navigate to the "Listeners" tab.
+3. Add a new listener (e.g., HTTP or HTTPS).
+4. In the "Action" section, select "Configure SNS Notifications."
+5. Choose the SNS topic you created earlier.
+
+### 3. Configure SNS with SMS Notifications:
+
+#### Set Up SMS Attributes:
+1. Open the SNS console.
+2. Go to "Text messaging (SMS) - Default Sender ID" in the left sidebar.
+3. Configure your default SMS attributes.
+
+#### Create SNS Topic for SMS:
+1. Follow the steps mentioned in the first section to create an SNS topic for SMS.
+
+#### Subscribe to SMS Notifications:
+1. In the SNS topic console, click on your SMS topic.
+2. Click on "Create Subscription."
+3. Choose "SMS" as the protocol.
+4. Provide the phone number for SMS notifications.
+5. Confirm the subscription by entering the confirmation code sent to the provided phone number.

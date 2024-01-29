@@ -1,0 +1,64 @@
+1. Create 5 VPCs with Different Networks:
+
+#### Using AWS Management Console:
+1. Open the VPC console.
+2. open to "Your VPCs."
+3. Click on "Create VPC" and follow the wizard to create VPCs with different CIDR blocks.
+
+### 2. Create a Customized VPC and Enable DHCP & DNS Options Set:
+
+#### Using AWS Management Console:
+1. Open the VPC console.
+2. Navigate to "Your VPCs."
+3. Click on "Create VPC."
+4. Configure the VPC with a custom CIDR block.
+5. Choose or create a DHCP options set with custom DNS settings.
+6. Complete the wizard and create the VPC.
+
+### 3. Enable Flow Logs for the Newly Created Custom VPC:
+
+#### Using AWS Management Console:
+1. Open the VPC console.
+2. Navigate to "Your VPCs."
+3. Select the custom VPC.
+4. Go to the "Flow Logs" tab and click "Create Flow Log."
+5. Configure flow log settings, including the destination S3 bucket.
+6. Complete the wizard to enable flow logs.
+
+### 4. Create a Network Load Balancer (NLB):
+
+#### Network Load Balancer Flow Diagram:
+
+```
+[Internet] ---> [NLB] ---> [Targets (Instances in VPCs)]
+```
+
+#### Explanation:
+- Internet: Represents incoming traffic from the internet.
+- NLB: Network Load Balancer, distributing traffic to backend targets based on IP protocol data.
+- Targets (Instances in VPCs):Instances in different VPCs receiving traffic from the NLB.
+
+### 5. Create 3 VPCs & Do Peering Between Them:
+
+#### Using AWS Management Console:
+1. Open the VPC console.
+2. open to "Your VPCs."
+3. Click on "Create VPC" and create three VPCs.
+4. Go to "Peering Connections" and create peering connections between VPC pairs.
+5. Accept the peering connection requests.
+
+### 6. Access All S3 Buckets in a Single Customized VPC Without Internet:
+
+To access S3 buckets in a custom VPC without internet, you can use VPC Endpoints for Amazon S3. Here's how you can achieve it:
+
+#### Using AWS Management Console:
+1. Open the VPC console.
+2. Navigate to "Your VPCs."
+3. Select the custom VPC.
+4. Go to "Endpoints" and click "Create Endpoint."
+5. Choose "com.amazonaws.REGION.s3" as the service name.
+6. Optionally, you can enable "Enable DNS name" for private DNS resolution.
+7. Configure security groups and policies as needed.
+8. Complete the wizard to create the VPC endpoint.
+
+Now, instances in the custom VPC can access S3 buckets using the endpoint, and you can restrict internet access for increased security.

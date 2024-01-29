@@ -1,0 +1,182 @@
+### 1. Policy to Access All Objects in a Specific Bucket:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:*",
+      "Resource": "arn:aws:s3:::your-specific-bucket/*"
+    }
+  ]
+}
+```
+
+### 2. Policy to Access Only 2 Objects in a Specific Bucket:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": [
+        "arn:aws:s3:::your-specific-bucket/object1.txt",
+        "arn:aws:s3:::your-specific-bucket/object2.txt"
+      ]
+    }
+  ]
+}
+```
+
+### 3. Policy to Deny Access to a Specific Bucket:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Deny",
+      "Action": "s3:*",
+      "Resource": "arn:aws:s3:::denied-bucket/*"
+    }
+  ]
+}
+```
+
+### 4. Policy to Create User Only and Attach Policy:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iam:CreateUser",
+        "iam:AttachUserPolicy"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+### 5. Policy to Place User in a Group Only:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "iam:AddUserToGroup",
+      "Resource": "arn:aws:iam::your-account-id:group/devops"
+    }
+  ]
+}
+```
+
+### 6. Policy to Get "Read" Access of All Users, Groups, But Not Policy:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iam:ListUsers",
+        "iam:ListGroups",
+        "iam:GetUser",
+        "iam:GetGroup",
+        "iam:GetGroupPolicy",
+        "iam:GetUserPolicy",
+        "iam:ListAttachedGroupPolicies",
+        "iam:ListAttachedUserPolicies"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+### 7. Policy to Get Access to Billing, EC2, and CloudWatch:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "aws-portal:ViewBilling",
+        "ec2:Describe*",
+        "cloudwatch:Get*",
+        "cloudwatch:List*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+### 8. Policy to Give Access Only to Northern Virginia:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "*",
+      "Resource": "*",
+      "Condition": {
+        "IpAddress": {
+          "aws:SourceIp": "x.x.x.x/xx"  // Specify the IP range for Northern Virginia
+        }
+      }
+    }
+  ]
+}
+```
+
+### 9. Policy to Deny Console Access Without MFA:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Deny",
+      "Action": "*",
+      "Resource": "*",
+      "Condition": {
+        "Bool": {
+          "aws:MultiFactorAuthPresent": "false"
+        }
+      }
+    }
+  ]
+}
+```
+
+### 10. Resource-Based Policy for S3 Bucket (Allow Access for Sunny User):
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::sunny-user-arn"
+      },
+      "Action": "s3:*",
+      "Resource": "arn:aws:s3:::S3_B16/*"
+    }
+  ]
+}
+```

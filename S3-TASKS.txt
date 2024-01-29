@@ -1,0 +1,104 @@
+### 1. Implement MFA on S3 Bucket for Object Deletion:
+
+#### Enable Versioning on the S3 Bucket:
+```bash
+aws s3api put-bucket-versioning --bucket YOUR_BUCKET_NAME --versioning-configuration Status=Enabled
+```
+
+#### Attach MFA Delete Requirement to the Bucket:
+```bash
+aws s3api put-bucket-versioning --bucket YOUR_BUCKET_NAME --versioning-configuration MFADelete=Enabled
+```
+
+#### Attach MFA to the User:
+```bash
+aws iam create-virtual-mfa-device --virtual-mfa-device-name YOUR_MFA_NAME
+aws iam enable-mfa-device --user-name YOUR_USER_NAME --serial-number arn:aws:iam::ACCOUNT_ID:mfa/YOUR_MFA_NAME
+```
+
+#### Update User's IAM Policy for MFA-Protected Bucket Deletion:
+Create a policy file (e.g., `policy.json`) with the following content:
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Deny",
+      "Action": "s3:DeleteObject",
+      "Resource": "arn:aws:s3:::YOUR_BUCKET_NAME/*",
+      "Condition": {
+        "Bool": {
+          "aws:MultiFactorAuthPresent": "false"
+        }
+      }
+    }
+  ]
+}
+```
+Apply the policy to the user:
+```bash
+aws iam put-user-policy --user-name YOUR_USER_NAME --policy-name DenyDeleteWithoutMFA --policy-document file://policy.json
+```
+
+### 2. Create S3 Bucket and Upload Object:
+
+#### Create S3 Bucket:
+```bash
+aws s3api create-bucket --bucket YOUR_BUCKET_NAME --region YOUR_REGION
+```
+
+#### Upload Object to S3 Bucket:
+```bash
+aws s3 cp yourfile.txt s3://YOUR_BUCKET_NAME/
+```
+
+### 3. Serverless Static Website Hosting Project:
+
+#### Prerequisites:
+- Install AWS CLI and configure it with appropriate credentials.
+- Install AWS SAM CLI (Serverless Application Model).
+
+#### Project Structure:
+```
+project-root/
+│
+├── backend/
+│   ├── template.yaml
+│   ├── src/
+│   │   ├── index.html
+│   │   ├── app.js
+│   └── ...
+│
+└── deployment/
+    ├── deploy.sh
+    ├── parameters.json
+    └── ...
+```
+
+#### Steps:
+
+1. Create Serverless Application with AWS SAM:
+   - Use AWS SAM to create a new serverless application.
+   ```bash
+   sam init --runtime nodejs14.x --name YourServerlessApp --app-template hello-world
+   ```
+
+2. Develop the Static Website:
+   - Replace the contents in `backend/src/` with your static website files (e.g., HTML, CSS, JavaScript).
+
+3. Configure AWS SAM Template:
+   - Update the `backend/template.yaml` file to define the AWS resources needed for your project, including the S3 bucket, Lambda functions, and API Gateway.
+
+4. Deploy the Application:
+   - Create a deployment script (e.g., `deployment/deploy.sh`) to package and deploy the application using SAM.
+   ```bash
+   sam build
+   sam deploy --guided
+   ```
+
+5. Website Management:
+   - Update your static website files in `backend/src/`.
+   - Use the deployment script to redeploy changes.
+
+6. Documentation:
+   - Create a documentation file (e.g., `Documentation.md`) to describe the project, its architecture, and the deployment process.

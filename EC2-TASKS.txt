@@ -1,0 +1,113 @@
+### 1. Create an Application Load Balancer with Different Pages:
+
+#### Using AWS Management Console:
+1. Open the AWS EC2 console and go to the Load Balancers section.
+2. Click on "Create Load Balancer."
+3. Choose "Application Load Balancer."
+4. Configure the load balancer with listener ports (e.g., HTTP on port 80).
+5. Configure the target group and add instances.
+6. Set up routing rules based on paths (e.g., /mobile, /laptop, /tablet, /clothes, /shoes).
+7. Complete the wizard and create the load balancer.
+
+### 2. Create a Simple Application Load Balancer with Auto Scaling:
+
+#### Using AWS Management Console:
+1. Follow steps 1-4 from task 1 to create an Application Load Balancer.
+2. Configure Auto Scaling:
+   - Create an Auto Scaling Group and Launch Configuration.
+   - Attach the Launch Configuration to the Auto Scaling Group.
+   - Configure scaling policies based on desired metrics.
+3. Complete the wizard and create the load balancer.
+
+### 3. Create a Simple Classic Load Balancer:
+
+#### Using AWS Management Console:
+1. Open the AWS EC2 console and go to the Load Balancers section.
+2. Click on "Create Load Balancer."
+3. Choose "Classic Load Balancer."
+4. Configure the load balancer with listener ports and instances.
+5. Set up security groups, health checks, and other settings.
+6. Complete the wizard and create the load balancer.
+
+### 4. Create an AMI Image from an Existing Running Tomcat Server:
+
+#### Using AWS Management Console:
+1. Open the AWS EC2 console.
+2. Select the running instance.
+3. Click on "Actions" -> "Create Image."
+4. Provide a name (e.g., tomcat-ami-v1) and description for the AMI.
+5. Click "Create Image."
+
+### 5-7. Host Customized HTML Web Page in Different OS Servers:
+
+For Ubuntu:
+```bash
+sudo apt-get update
+sudo apt-get install apache2
+sudo systemctl start apache2
+sudo systemctl enable apache2
+echo "Your HTML content" | sudo tee /var/www/html/index.html
+```
+
+For Red Hat 9 (Note: Red Hat 9 is outdated; consider using a supported version like RHEL 7/8):
+```bash
+sudo yum install httpd
+sudo systemctl start httpd
+sudo systemctl enable httpd
+echo "Your HTML content" | sudo tee /var/www/html/index.html
+```
+
+For Windows Server:
+1. Install IIS via Server Manager.
+2. Create an HTML file in `C:\inetpub\wwwroot\` directory.
+
+### 8. EC2 Instance with Debian, Create Jarvis.txt Files, and Upload to S3:
+
+#### Using AWS CLI on Debian Instance:
+```bash
+# Install AWS CLI
+sudo apt-get update
+sudo apt-get install awscli
+
+# Create Jarvis.txt files
+for i in {1..1000}; do echo "Jarvis File $i" > jarvis_$i.txt; done
+
+# Configure AWS CLI with IAM credentials
+aws configure
+
+# Copy Jarvis.txt files to S3 bucket
+aws s3 cp jarvis*.txt s3://your-s3-bucket/
+```
+
+### 9. Task 1 in AWS EC2 with Scripting (Bash Example):
+
+#### Bash Script:
+```bash
+#!/bin/bash
+
+# Install necessary packages (e.g., Apache for serving HTML pages)
+sudo apt-get update
+sudo apt-get install -y apache2
+
+# Create HTML pages for different paths
+echo "Mobile Page" | sudo tee /var/www/html/mobile.html
+echo "Laptop Page" | sudo tee /var/www/html/laptop.html
+echo "Tablet Page" | sudo tee /var/www/html/tablet.html
+echo "Clothes Page" | sudo tee /var/www/html/clothes.html
+echo "Shoes Page" | sudo tee /var/www/html/shoes.html
+
+# Restart Apache service
+sudo systemctl restart apache2
+```
+
+### 10. Recover SSH Access to EC2 Instance:
+
+#### Steps:
+1. Create an Amazon Machine Image (AMI) of the instance with a new key pair.
+2. Launch a new EC2 instance using the AMI with the new key pair.
+3. Associate an Elastic IP address to the new instance if needed.
+4. Update DNS records or any references to the new IP address.
+5. SSH into the new instance using the new key pair.
+
+### Important Note:
+Always follow security best practices, such as using secure methods for key management and keeping sensitive information (like private keys) secure. Additionally, ensure that security groups and network configurations are appropriately set up.
